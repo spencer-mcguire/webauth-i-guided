@@ -1,5 +1,5 @@
 const router = require('express').Router();
-
+const bc = require('bcryptjs');
 const Users = require('../users/users-model.js');
 
 router.post('/register', (req, res) => {
@@ -29,6 +29,17 @@ router.post('/login', (req, res) => {
     .catch(error => {
       res.status(500).json(error);
     });
+});
+
+router.get('/secret', (req, res) => {
+  console.log(req.headers);
+  if (req.headers.authorization) {
+    bc.hash(req.headers.authorization, 10, (err, hash) => {
+      res.status(200).json({ hash });
+    });
+  } else {
+    res.status(400).json({ error: 'something' });
+  }
 });
 
 module.exports = router;

@@ -32,8 +32,8 @@ router.post('/login', (req, res) => {
 });
 
 router.get('/secret', (req, res) => {
-  console.log(req.headers);
   if (req.headers.authorization) {
+    // what im checking, how many times, callback
     bc.hash(req.headers.authorization, 10, (err, hash) => {
       res.status(200).json({ hash });
     });
